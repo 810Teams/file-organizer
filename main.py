@@ -8,7 +8,7 @@ import sys
 
 from src.model.image_file import ImageFile
 from src.utils import *
-from settings import PATH_VALIDATOR, FILE_NAME_VALIDATOR, EXTENSION_VALIDATOR, RENAME_FUNCTION
+from settings import FOLDER_PATH_VALIDATOR, FILE_NAME_VALIDATOR, EXTENSION_VALIDATOR, RENAME_FUNCTION
 
 
 def main() -> None:
@@ -16,11 +16,11 @@ def main() -> None:
     # Determine base folder name
     is_test: bool = '-test' in sys.argv
     base_path: str = str()
+
+    print()
     if len(sys.argv) > 1 and sys.argv[1] != '-test':
         base_path = sys.argv[1]
-        print()
         print('Base folder name is set to \'{}\'.'.format(base_path))
-        print()
 
     # Rename
     file_list: list[ImageFile] = get_image_file_list(base_path, base_path=base_path)
@@ -32,8 +32,9 @@ def main() -> None:
             print('  - Renamed `{}` to `{}`'.format(f.full_path, f.new_full_path))
             renamed_count += 1
 
+    # Logging
+    print()
     if renamed_count > 0:
-        print()
         print('Total of {} file{} renamed.'.format(renamed_count, (renamed_count > 1) * 's'))
     else:
         print('No files renamed.')
@@ -42,7 +43,6 @@ def main() -> None:
     if not is_test:
         print()
         remove_empty_folder(base_path, base_path=base_path)
-    print()
 
 
 def get_image_file_list(current_directory: str, file_list: list[ImageFile]=list(), base_path: str=str()) -> list[ImageFile]:
@@ -57,7 +57,7 @@ def get_image_file_list(current_directory: str, file_list: list[ImageFile]=list(
             image_file: ImageFile = ImageFile(
                 path(current_directory, directory),
                 base_path=base_path,
-                path_validator=PATH_VALIDATOR,
+                folder_path_validator=FOLDER_PATH_VALIDATOR,
                 file_name_validator=FILE_NAME_VALIDATOR,
                 extension_validator=EXTENSION_VALIDATOR,
                 rename_function=RENAME_FUNCTION

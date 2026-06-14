@@ -17,14 +17,14 @@ class ImageFile:
         full_path: str,
         rename_function: Callable[[str, str, str, str], str],
         base_path: str='',
-        path_validator: Callable[[str], bool]=lambda x: True,
+        folder_path_validator: Callable[[str], bool]=lambda x: True,
         file_name_validator: Callable[[str], bool]=lambda x: True,
         extension_validator: Callable[[str], bool]=lambda x: True
     ):
         self.full_path: str = full_path
         self.rename_pattern: Callable[[str, str, str, str], str] = rename_function
         self.base_path: str = base_path
-        self.path_validator: Callable[[str], bool] = path_validator
+        self.path_validator: Callable[[str], bool] = folder_path_validator
         self.file_name_validator: Callable[[str], bool] = file_name_validator
         self.extension_validator: Callable[[str], bool] = extension_validator
 
